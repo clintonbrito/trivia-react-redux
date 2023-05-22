@@ -1,5 +1,4 @@
-import { SAVE_EMAIL } from '../actions';
-import { SET_USER } from '../actions';
+import { SAVE_EMAIL, SET_USER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -24,7 +23,7 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     };
   default:
     return state;
-  };
+  }
 };
 
 export default playerReducer;
