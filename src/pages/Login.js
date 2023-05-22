@@ -1,6 +1,9 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import validator from 'validator';
+import { connect } from 'react-redux';
+import { addUser } from '../redux/actions';
 
 class Login extends Component {
   state = {
@@ -19,6 +22,13 @@ class Login extends Component {
         isButtonDisabled: !(validator.isEmail(emailInput) && nameInput.length > 0),
       });
     });
+  };
+
+  handlePlay = () => {
+    const { history, dispatch } = this.props;
+    const { emailInput, nameInput } = this.state;
+    history.push('/game');
+    dispatch(addUser(emailInput, nameInput));
   };
 
   render() {
@@ -49,17 +59,20 @@ class Login extends Component {
               onChange={ (e) => this.handleInput(e) }
             />
           </label>
-          <Link to="/game">
-            <button
-              type="button"
-              id="play-button"
-              data-testid="btn-play"
-              disabled={ isButtonDisabled }
-              // onClick={ () => (dispatch(loginAction(emailInput))) }
-            >
-              JOGAR
-            </button>
-          </Link>
+          <button
+            type="button"
+            id="play-button"
+            data-testid="btn-play"
+            disabled={ isButtonDisabled }
+            onClick={ this.handlePlay }
+          >
+            JOGAR
+          </button>
+          <button
+            data-testid="btn-settings"
+          >
+            Configurações
+          </button>
         </form>
       </div>
 
@@ -67,4 +80,15 @@ class Login extends Component {
   }
 }
 
-export default Login;
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }),
+}.isRequired;
+
+const mapStateToProps = (state) => ({
+  token: state.tokenReducer.token,
+});
+
+export default connect(mapStateToProps)(Login);
