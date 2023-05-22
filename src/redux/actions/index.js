@@ -1,16 +1,31 @@
+import md5 from 'crypto-js/md5';
+
+// ACTIONS TYPES
+export const SAVE_EMAIL = 'SAVE_EMAIL';
 export const ADD_TOKEN = 'ADD_TOKEN';
 export const SET_USER = 'SET_USER';
 
-export const addToken = (token) => ({
+const saveEmail = (imageURL) => ({
+  type: SAVE_EMAIL,
+  payload: imageURL,
+});
+
+const addToken = (token) => ({
   type: ADD_TOKEN,
   token,
 });
 
-export const setUser = (name, email) => ({
+const setUser = (name, email) => ({
   type: SET_USER,
   name,
   gravatarEmail: email,
 });
+
+export const urlGravatar = (email) => (dispatch) => {
+  const hashGravatar = md5(email).toString();
+  const imageURL = `https://www.gravatar.com/avatar/${hashGravatar}`;
+  return dispatch(saveEmail(imageURL));
+};
 
 export function addUser(name, email) {
   return async (dispatch) => {
