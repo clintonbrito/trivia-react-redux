@@ -1,16 +1,24 @@
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { urlGravatar } from '../redux/actions';
+import md5 from 'crypto-js/md5';
+import { saveURL } from '../redux/actions';
+// import { urlGravatar } from '../redux/actions';
 
 class Header extends Component {
-  componentDidMount() {
-    const { gravatarEmail, dispatch } = this.props;
-    dispatch(urlGravatar(gravatarEmail));
-  }
+  // componentDidMount() {
+  //   const { gravatarEmail, dispatch } = this.props;
+  //   dispatch(urlGravatar(gravatarEmail));
+  // }
 
   render() {
-    const { name, score, imageURL } = this.props;
+    const { name, score, dispatch, gravatarEmail } = this.props;
+
+    const hashGravatar = md5(gravatarEmail).toString();
+    const imageURL = `https://www.gravatar.com/avatar/${hashGravatar}`;
+    dispatch(saveURL(imageURL));
+    // console.log(imageURL);
+
     return (
       <header>
         <div>
