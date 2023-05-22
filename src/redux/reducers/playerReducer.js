@@ -1,4 +1,4 @@
-import { SAVE_EMAIL } from "../actions";
+import { SAVE_EMAIL } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -10,11 +10,11 @@ const INITIAL_STATE = {
 
 const playerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case SAVE_EMAIL:
-      return {
-        ...state,
-        imageURL: action.payload,
-      }
+  case SAVE_EMAIL:
+    return {
+      ...state,
+      imageURL: action.payload,
+    };
   default:
     return state;
   }
