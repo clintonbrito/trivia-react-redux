@@ -17,7 +17,6 @@ class Header extends Component {
     const hashGravatar = md5(gravatarEmail).toString();
     const imageURL = `https://www.gravatar.com/avatar/${hashGravatar}`;
     dispatch(saveURL(imageURL));
-    // console.log(imageURL);
 
     return (
       <header>
@@ -51,6 +50,7 @@ const mapStateToProps = (state) => ({
   score: state.playerReducer.score,
   gravatarEmail: state.playerReducer.gravatarEmail,
   imageURL: state.playerReducer.imageURL,
+  token: state.tokenReducer.token,
 });
 
 export default connect(mapStateToProps)(Header);

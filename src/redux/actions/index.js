@@ -4,6 +4,7 @@ import md5 from 'crypto-js/md5';
 export const SAVE_URL = 'SAVE_URL';
 export const ADD_TOKEN = 'ADD_TOKEN';
 export const SET_USER = 'SET_USER';
+export const DELETE_TOKEN = 'DELETE_TOKEN';
 
 export const saveURL = (imageURL) => ({
   type: SAVE_URL,
@@ -35,5 +36,16 @@ export function addUser(email, name) {
     dispatch(addToken(token));
     localStorage.setItem('token', token);
     dispatch(setUser(name, email));
+  };
+}
+
+const deleteToken = () => ({
+  type: DELETE_TOKEN,
+});
+
+export function removeUser() {
+  return (dispatch) => {
+    dispatch(deleteToken());
+    localStorage.setItem('token', '');
   };
 }
