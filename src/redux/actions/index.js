@@ -2,9 +2,7 @@ import md5 from 'crypto-js/md5';
 
 // ACTIONS TYPES
 export const SAVE_URL = 'SAVE_URL';
-export const ADD_TOKEN = 'ADD_TOKEN';
 export const SET_USER = 'SET_USER';
-export const DELETE_TOKEN = 'DELETE_TOKEN';
 
 export const saveURL = (imageURL) => ({
   type: SAVE_URL,
@@ -26,16 +24,5 @@ export const urlGravatar = (email) => async (dispatch) => {
 export function addUser(name, email) {
   return async (dispatch) => {
     dispatch(setUser(name, email));
-  };
-}
-
-const deleteToken = () => ({
-  type: DELETE_TOKEN,
-});
-
-export function removeUser() {
-  return (dispatch) => {
-    dispatch(deleteToken());
-    localStorage.setItem('token', '');
   };
 }
