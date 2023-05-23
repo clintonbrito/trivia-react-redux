@@ -6,18 +6,16 @@ import { saveURL } from '../redux/actions';
 // import { urlGravatar } from '../redux/actions';
 
 class Header extends Component {
-  // componentDidMount() {
-  //   const { gravatarEmail, dispatch } = this.props;
-  //   dispatch(urlGravatar(gravatarEmail));
-  // }
+  componentDidMount() {
+
+  }
 
   render() {
-    const { name, score, dispatch, gravatarEmail } = this.props;
-
+    const { name, score } = this.props;
+    const { dispatch, gravatarEmail } = this.props;
     const hashGravatar = md5(gravatarEmail).toString();
     const imageURL = `https://www.gravatar.com/avatar/${hashGravatar}`;
     dispatch(saveURL(imageURL));
-
     return (
       <header>
         <div>

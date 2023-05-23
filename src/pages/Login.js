@@ -28,8 +28,8 @@ class Login extends Component {
   handlePlay = () => {
     const { history, dispatch } = this.props;
     const { emailInput, nameInput } = this.state;
-    history.push('/game');
     dispatch(addUser(nameInput, emailInput));
+    history.push('/game');
   };
 
   handleSettings = () => {
