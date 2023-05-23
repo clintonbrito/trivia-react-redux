@@ -10,6 +10,7 @@ class Login extends Component {
     emailInput: '',
     nameInput: '',
     isButtonDisabled: true,
+    wasSettingsClicked: false,
   };
 
   handleInput = ({ target }) => {
@@ -28,11 +29,18 @@ class Login extends Component {
     const { history, dispatch } = this.props;
     const { emailInput, nameInput } = this.state;
     history.push('/game');
-    dispatch(addUser(emailInput, nameInput));
+    dispatch(addUser(nameInput, emailInput));
+  };
+
+  handleSettings = () => {
+    const { wasSettingsClicked } = this.state;
+    this.setState({
+      wasSettingsClicked: !wasSettingsClicked,
+    });
   };
 
   render() {
-    const { emailInput, nameInput, isButtonDisabled } = this.state;
+    const { emailInput, nameInput, isButtonDisabled, wasSettingsClicked } = this.state;
     return (
       <div className="login-page">
         <h1>Login</h1>
@@ -69,11 +77,19 @@ class Login extends Component {
             JOGAR
           </button>
           <button
+            type="button"
             data-testid="btn-settings"
+            onClick={ this.handleSettings }
           >
             Configurações
           </button>
         </form>
+        { wasSettingsClicked && (
+          <div>
+            <h2 data-testid="settings-title">Configurações</h2>
+            <p>Aqui vai ter configurações</p>
+          </div>
+        )}
       </div>
 
     );
