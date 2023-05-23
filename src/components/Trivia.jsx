@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
+// import { withRouter } from 'react-router-dom';
 
 class Trivia extends Component {
   state = {
@@ -15,12 +15,12 @@ class Trivia extends Component {
 
   verifyTriviaAPI = (resultAPI) => {
     const { history } = this.props;
-    console.log(history);
     const errorCode = 0;
     if (resultAPI.response_code !== errorCode) {
       history.push('/');
       localStorage.setItem('token', '');
     } else {
+      console.log(resultAPI);
       this.setState({
         questions: resultAPI.results,
       });
@@ -30,34 +30,73 @@ class Trivia extends Component {
   getQuestions = async () => {
     // const { token } = this.props;
     const token = localStorage.getItem('token');
-    console.log(token);
     try {
-      // const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
-      const URL_API_TRIVIA = 'https://opentdb.com/api.php?amount=5&token=null';
-      console.log(URL_API_TRIVIA);
+      const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
+      // const URL_API_TRIVIA = 'https://opentdb.com/api.php?amount=5&token=null';
       const response = await fetch(URL_API_TRIVIA);
       const resultAPI = await response.json();
-      console.log(resultAPI);
       this.verifyTriviaAPI(resultAPI);
     } catch (e) {
       console.log(e.message);
     }
   };
 
+  shuffleArray = (array) => {
+    for (let i = array.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
+    }
+    console.log(array);
+    return array;
+  };
+
+  makeArrayQuestions = (incorrects, correct) => {
+    const answers = [...incorrects, correct];
+    return this.shuffleArray(answers);
+  };
+
   render() {
-    const { questions } = this.state;
+    const { questions, questionsId } = this.state;
+    let contWrongAnswers = 0;
     console.log(questions);
     return (
-      <div>
-
-      </div>
+      questions.length > 0 && (
+        <div>
+          <h2 data-testid="question-category">
+            {questions[questionsId].category}
+          </h2>
+          <h3 data-testid="question-text">{questions[questionsId].question}</h3>
+          <div data-testid="answer-options">
+            {this.makeArrayQuestions(
+              questions[questionsId].incorrect_answers,
+              questions[questionsId].correct_answer,
+            ).map((answer) => {
+              contWrongAnswers += 1;
+              return (
+                <button
+                  key={ answer }
+                  data-testid={
+                    answer === questions[questionsId].correct_answer
+                      ? 'correct-answer'
+                      : `wrong-answer-${contWrongAnswers - 1}`
+                  }
+                >
+                  {answer}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )
     );
   }
 }
 
-Trivia.propTypes = ({
+Trivia.propTypes = {
   // token: PropTypes.string,
-}).isRequired;
+}.isRequired;
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token,

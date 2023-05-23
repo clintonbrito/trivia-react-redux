@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import Trivia from '../components/Trivia';
 
@@ -13,5 +14,9 @@ class Game extends Component {
     );
   }
 }
+
+Game.propTypes = {
+  history: PropTypes.shape({}),
+}.isRequired;
 
 export default Game;
