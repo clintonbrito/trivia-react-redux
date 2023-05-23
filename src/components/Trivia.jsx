@@ -1,34 +1,24 @@
 // import PropTypes from 'prop-types';
-import React, { Component, ReactDOM } from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { MemoryRouter, Route } from 'react-router-dom';
-import Login from '../pages/Login';
+import { withRouter } from 'react-router-dom';
 
 class Trivia extends Component {
   state = {
     questions: [],
+    questionsId: 0,
   };
 
   componentDidMount() {
-    const { history } = this.props;
-    console.log(this.props);
-
     this.getQuestions();
   }
 
   verifyTriviaAPI = (resultAPI) => {
-    // console.log(resultAPI);
     const { history } = this.props;
+    console.log(history);
     const errorCode = 0;
     if (resultAPI.response_code !== errorCode) {
-      console.log(this.props);
       history.push('/');
-      // ReactDOM.render(
-      //   <MemoryRouter>
-      //     <Route path="/" component={ Login } />
-      //   </MemoryRouter>,
-      // document.getElementById('root'),
-      // );
       localStorage.setItem('token', '');
     } else {
       this.setState({
@@ -42,8 +32,8 @@ class Trivia extends Component {
     const token = localStorage.getItem('token');
     console.log(token);
     try {
-      const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
-      // const URL_API_TRIVIA = 'https://opentdb.com/api.php?amount=5&token=null';
+      // const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
+      const URL_API_TRIVIA = 'https://opentdb.com/api.php?amount=5&token=null';
       console.log(URL_API_TRIVIA);
       const response = await fetch(URL_API_TRIVIA);
       const resultAPI = await response.json();
@@ -56,8 +46,11 @@ class Trivia extends Component {
 
   render() {
     const { questions } = this.state;
+    console.log(questions);
     return (
-      <div>Trivia</div>
+      <div>
+
+      </div>
     );
   }
 }

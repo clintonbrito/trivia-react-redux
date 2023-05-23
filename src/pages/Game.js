@@ -4,10 +4,11 @@ import Trivia from '../components/Trivia';
 
 class Game extends Component {
   render() {
+    const { history } = this.props;
     return (
       <>
         <Header />
-        <Trivia />
+        <Trivia history={ history } />
       </>
     );
   }
