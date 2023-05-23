@@ -7,15 +7,14 @@ import { saveURL } from '../redux/actions';
 
 class Header extends Component {
   componentDidMount() {
-
-  }
-
-  render() {
-    const { name, score } = this.props;
     const { dispatch, gravatarEmail } = this.props;
     const hashGravatar = md5(gravatarEmail).toString();
     const imageURL = `https://www.gravatar.com/avatar/${hashGravatar}`;
     dispatch(saveURL(imageURL));
+  }
+
+  render() {
+    const { name, score, imageURL } = this.props;
     return (
       <header>
         <div>

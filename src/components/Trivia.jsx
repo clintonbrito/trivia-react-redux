@@ -1,11 +1,11 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { removeUser } from '../redux/actions';
 
 class Trivia extends Component {
   componentDidMount() {
-    // this.getQuestions();
+    this.getQuestions();
   }
 
   verifyTriviaAPI = (resultAPI) => {
@@ -22,12 +22,17 @@ class Trivia extends Component {
     // const { token } = this.props;
     const token = localStorage.getItem('token');
     console.log(token);
-    const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
-    console.log(URL_API_TRIVIA);
-    const response = await fetch(URL_API_TRIVIA);
-    const resultAPI = await response.json();
-    console.log(resultAPI);
-    this.verifyTriviaAPI(resultAPI);
+    try {
+      const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
+      // const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=null`;
+      console.log(URL_API_TRIVIA);
+      const response = await fetch(URL_API_TRIVIA);
+      const resultAPI = await response.json();
+      console.log(resultAPI);
+      this.verifyTriviaAPI(resultAPI);
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   render() {
@@ -38,11 +43,11 @@ class Trivia extends Component {
 }
 
 Trivia.propTypes = ({
-  token: PropTypes.string,
+  // token: PropTypes.string,
 }).isRequired;
 
-const mapStateToProps = (state) => ({
-  token: state.tokenReducer.token,
+const mapStateToProps = () => ({
+  // token: state.tokenReducer.token,
 });
 
 export default connect(mapStateToProps)(Trivia);

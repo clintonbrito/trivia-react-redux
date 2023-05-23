@@ -59,8 +59,8 @@ describe("Testa a página de login", () => {
         userEvent.type(inputEmail, EMAIL);
         userEvent.type(inputName, NOME);
 
-        userEvent.click(buttonPlay);
-     
+        // userEvent.click(buttonPlay);
+        setTimeout(userEvent.click(buttonPlay),2000)
         expect(history.location.pathname).toBe('/game');
     });
 });
