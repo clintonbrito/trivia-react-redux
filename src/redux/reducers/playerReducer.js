@@ -1,4 +1,4 @@
-import { SAVE_EMAIL, SET_USER } from '../actions';
+import { SAVE_URL, SET_USER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -10,7 +10,7 @@ const INITIAL_STATE = {
 
 const playerReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
-  case SAVE_EMAIL:
+  case SAVE_URL:
     return {
       ...state,
       imageURL: action.payload,
