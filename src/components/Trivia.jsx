@@ -19,8 +19,9 @@ class Trivia extends Component {
   };
 
   getQuestions = async () => {
-    const { token } = this.props;
-    const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
+    // const { token } = this.props;
+    const response = await fetch('https://opentdb.com/api.php?amount=5&token=3');
+    // const response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     const resultAPI = await response.json();
     this.verifyTriviaAPI(resultAPI);
   };
