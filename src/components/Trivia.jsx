@@ -1,6 +1,8 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { addPoints } from '../redux/actions';
+import Timer from './Timer';
 // import { withRouter } from 'react-router-dom';
 import './Trivia.css';
 
@@ -9,25 +11,18 @@ class Trivia extends Component {
     questions: [],
     questionsId: 0,
     wasAnswerSelected: false,
+    // seconds: 0,
   };
 
   componentDidMount() {
     this.getQuestions();
   }
 
-  verifyTriviaAPI = (resultAPI) => {
-    const { history } = this.props;
-    const errorCode = 0;
-    if (resultAPI.response_code !== errorCode) {
-      history.push('/');
-      localStorage.setItem('token', '');
-    } else {
-      console.log(resultAPI);
-      this.setState({
-        questions: resultAPI.results,
-      });
-    }
-  };
+  // getTimer(seconds) {
+  //   this.setState({
+  //     seconds,
+  //   });
+  // }
 
   getQuestions = async () => {
     // const { token } = this.props;
@@ -43,6 +38,25 @@ class Trivia extends Component {
     }
   };
 
+  makeArrayQuestions = (incorrects, correct) => {
+    const answers = [...incorrects, correct];
+    return this.shuffleArray(answers);
+  };
+
+  getPointsByDifficult = ({ difficulty }) => {
+    const hardPoint = 3;
+    switch (difficulty) {
+    case 'easy':
+      return 1;
+    case 'medium':
+      return 2;
+    case 'hard':
+      return hardPoint;
+    default:
+      return 0;
+    }
+  };
+
   shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i -= 1) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -50,19 +64,35 @@ class Trivia extends Component {
       array[i] = array[j];
       array[j] = temp;
     }
-    console.log(array);
     return array;
   };
 
-  makeArrayQuestions = (incorrects, correct) => {
-    const answers = [...incorrects, correct];
-    return this.shuffleArray(answers);
+  verifyTriviaAPI = (resultAPI) => {
+    const { history } = this.props;
+    const errorCode = 0;
+    if (resultAPI.response_code !== errorCode) {
+      history.push('/');
+      localStorage.setItem('token', '');
+    } else {
+      this.setState({
+        questions: resultAPI.results,
+      });
+    }
   };
 
-  handleAnswer = () => {
+  handleAnswer = ({ target: { textContent } }) => {
+    const { questions, questionsId } = this.state;
+    const { dispatch } = this.props;
     this.setState({
       wasAnswerSelected: true,
     });
+    console.log(questions[questionsId]);
+    if (textContent === questions[questionsId].correct_answer) {
+      const diffPoints = this.getPointsByDifficult(questions[questionsId]);
+      const rightAnswerPoints = 10;
+      const timerPoints = 2;
+      dispatch(addPoints(rightAnswerPoints + (diffPoints * timerPoints)));
+    }
   };
 
   verifyAnswerColor = (answer) => {
@@ -77,41 +107,43 @@ class Trivia extends Component {
   render() {
     const { questions, questionsId, wasAnswerSelected } = this.state;
     let countWrongAnswers = 0;
-    console.log(questions);
     return (
-      questions.length > 0 && (
-        <div>
-          <h2 data-testid="question-category">
-            {questions[questionsId].category}
-          </h2>
-          <h3 data-testid="question-text">{questions[questionsId].question}</h3>
-          <div data-testid="answer-options">
-            {this.makeArrayQuestions(
-              questions[questionsId].incorrect_answers,
-              questions[questionsId].correct_answer,
-            ).map((answer) => {
-              if (answer !== questions[questionsId].correct_answer) {
-                countWrongAnswers += 1;
-              }
-              return (
-                <button
-                  key={ answer }
-                  onClick={ this.handleAnswer }
-                  className={ wasAnswerSelected
-                    ? this.verifyAnswerColor(answer) : 'answer' }
-                  data-testid={
-                    answer === questions[questionsId].correct_answer
-                      ? 'correct-answer'
-                      : `wrong-answer-${countWrongAnswers - 1}`
-                  }
-                >
-                  {answer}
-                </button>
-              );
-            })}
+      <div>
+        <Timer getTimer={ () => this.getTimer } />
+        {questions.length > 0 && (
+          <div>
+            <h2 data-testid="question-category">
+              {questions[questionsId].category}
+            </h2>
+            <h3 data-testid="question-text">{questions[questionsId].question}</h3>
+            <div data-testid="answer-options">
+              {this.makeArrayQuestions(
+                questions[questionsId].incorrect_answers,
+                questions[questionsId].correct_answer,
+              ).map((answer) => {
+                if (answer !== questions[questionsId].correct_answer) {
+                  countWrongAnswers += 1;
+                }
+                return (
+                  <button
+                    key={ answer }
+                    onClick={ this.handleAnswer }
+                    className={ wasAnswerSelected
+                      ? this.verifyAnswerColor(answer) : 'answer' }
+                    data-testid={
+                      answer === questions[questionsId].correct_answer
+                        ? 'correct-answer'
+                        : `wrong-answer-${countWrongAnswers - 1}`
+                    }
+                  >
+                    {answer}
+                  </button>
+                );
+              })}
+            </div>
           </div>
-        </div>
-      )
+        )}
+      </div>
     );
   }
 }
