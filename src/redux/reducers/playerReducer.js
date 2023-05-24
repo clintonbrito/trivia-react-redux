@@ -21,6 +21,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       name: action.name,
       gravatarEmail: action.gravatarEmail,
     };
+  case ADD_ASSERTIONS:
+    return {
+      ...state,
+      assertions: action.payload,
+    };
   case ADD_POINTS:
     return {
       ...state,
