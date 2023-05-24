@@ -10,10 +10,10 @@ class Feedback extends React.Component {
     return (
       <div>
         <h2 data-testid="feedback-total-score">
-      Score
+        Score
         </h2>
         <h2 data-testid="feedback-total-question">
-      Question
+        Question
         </h2>
       </div>
     );
