@@ -6,17 +6,12 @@ INICIAL_STATE = {
   feedbackMsg: '',
 };
 class Feedback extends React.Component {
-
   render() {
     return (
       <div>
-        <h2
-          data-testid="feedback-total-score"
-        >
+        <h2 data-testid="feedback-total-score">
         </h2>
-        <h2
-          data-testid="feedback-total-question"
-        >
+        <h2 data-testid="feedback-total-question">
         </h2>
       </div>
     );
@@ -24,10 +19,10 @@ class Feedback extends React.Component {
 }
 
 // Feedback.propTypes = {
-  // player: PropTypes.shape({
-  //  assertions: PropTypes.number,
-  //  score: PropTypes.number,
-  // }).isRequired,
-//};
+// player: PropTypes.shape({
+//  assertions: PropTypes.number,
+//  score: PropTypes.number,
+// }).isRequired,
+// };
 
 export default Feedback;
