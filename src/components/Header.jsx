@@ -44,10 +44,10 @@ Header.propTypes = ({
 }).isRequired;
 
 const mapStateToProps = (state) => ({
-  name: state.playerReducer.name,
-  score: state.playerReducer.score,
-  gravatarEmail: state.playerReducer.gravatarEmail,
-  imageURL: state.playerReducer.imageURL,
+  name: state.player.name,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  imageURL: state.player.imageURL,
   token: state.tokenReducer.token,
 });
 

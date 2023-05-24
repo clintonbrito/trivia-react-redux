@@ -197,7 +197,7 @@ Trivia.propTypes = {
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token,
-  seconds: state.playerReducer.seconds,
+  seconds: state.player.seconds,
 });
 
 export default connect(mapStateToProps)(Trivia);

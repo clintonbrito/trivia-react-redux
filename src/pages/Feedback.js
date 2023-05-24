@@ -4,13 +4,13 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
+  goRanking = () => {
+    const { history } = this.props;
+    history.push('/Ranking');
+  };
+
   render() {
     const { score } = this.props;
-
-    goRanking = () => {
-      const { history } = this.props;
-      history.push('/Ranking');
-    };
     return (
       <div>
         <Header />
@@ -39,7 +39,7 @@ Feedback.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  score: state.playerReducer.score,
+  score: state.player.score,
 });
 
 export default connect(mapStateToProps)(Feedback);
