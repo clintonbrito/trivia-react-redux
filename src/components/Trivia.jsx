@@ -2,11 +2,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 // import { withRouter } from 'react-router-dom';
+import './Trivia.css';
 
 class Trivia extends Component {
   state = {
     questions: [],
     questionsId: 0,
+    wasAnswerSelected: false,
   };
 
   componentDidMount() {
@@ -57,9 +59,24 @@ class Trivia extends Component {
     return this.shuffleArray(answers);
   };
 
-  render() {
+  handleAnswer = () => {
+    this.setState({
+      wasAnswerSelected: true,
+    });
+  };
+
+  verifyAnswerColor = (answer) => {
     const { questions, questionsId } = this.state;
-    let contWrongAnswers = 0;
+    return answer === questions[questionsId].correct_answer ? (
+      'correct-answer'
+    ) : (
+      'incorrect-answer'
+    );
+  };
+
+  render() {
+    const { questions, questionsId, wasAnswerSelected } = this.state;
+    let countWrongAnswers = 0;
     console.log(questions);
     return (
       questions.length > 0 && (
@@ -73,14 +90,19 @@ class Trivia extends Component {
               questions[questionsId].incorrect_answers,
               questions[questionsId].correct_answer,
             ).map((answer) => {
-              contWrongAnswers += 1;
+              if (answer !== questions[questionsId].correct_answer) {
+                countWrongAnswers += 1;
+              }
               return (
                 <button
                   key={ answer }
+                  onClick={ this.handleAnswer }
+                  className={ wasAnswerSelected
+                    ? this.verifyAnswerColor(answer) : 'answer' }
                   data-testid={
                     answer === questions[questionsId].correct_answer
                       ? 'correct-answer'
-                      : `wrong-answer-${contWrongAnswers - 1}`
+                      : `wrong-answer-${countWrongAnswers - 1}`
                   }
                 >
                   {answer}
