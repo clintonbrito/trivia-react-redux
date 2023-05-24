@@ -1,4 +1,4 @@
-import { ADD_POINTS, SAVE_URL, SET_USER } from '../actions';
+import { ADD_POINTS, SAVE_URL, SET_USER, SET_TIME } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   score: 0,
   gravatarEmail: '',
   imageURL: '',
+  seconds: 30,
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -25,6 +26,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: state.score + action.points,
+    };
+  case SET_TIME:
+    return {
+      ...state,
+      seconds: action.seconds,
     };
   default:
     return state;

@@ -18,10 +18,8 @@ class Trivia extends Component {
     this.getQuestions();
   }
 
-  // getTimer(seconds) {
-  //   this.setState({
-  //     seconds,
-  //   });
+  // componentDidUpdate(prevState) {
+
   // }
 
   getQuestions = async () => {
@@ -119,6 +117,7 @@ class Trivia extends Component {
 
   render() {
     const { questions, questionsId, wasAnswerSelected } = this.state;
+    const { seconds } = this.props;
     let countWrongAnswers = 0;
     return (
       <div>
@@ -141,7 +140,9 @@ class Trivia extends Component {
                   <button
                     key={ answer }
                     onClick={ this.handleAnswer }
+                    disabled={ seconds === 0 }
                     className={ wasAnswerSelected
+
                       ? this.verifyAnswerColor(answer) : 'answer' }
                     data-testid={
                       answer === questions[questionsId].correct_answer
@@ -177,6 +178,7 @@ Trivia.propTypes = {
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token,
+  seconds: state.playerReducer.seconds,
 });
 
 export default connect(mapStateToProps)(Trivia);

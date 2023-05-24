@@ -1,11 +1,21 @@
+/* * {
+  border: 3px;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} */
+
 .correct-answer {
   border: 3px solid rgb(6, 240, 15);
+  padding: 10px;
 }
 
 .incorrect-answer {
   border: 3px solid red;
+  padding: 10px;
 }
 
 .answer {
-  border: 3px solid rgb(42, 10, 223);
+  border: 3px solid black;
+  padding: 10px;
 }

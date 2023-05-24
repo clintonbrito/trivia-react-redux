@@ -4,6 +4,7 @@ import md5 from 'crypto-js/md5';
 export const SAVE_URL = 'SAVE_URL';
 export const SET_USER = 'SET_USER';
 export const ADD_POINTS = 'ADD_POINTS';
+export const SET_TIME = 'SET_TIME';
 
 export const saveURL = (imageURL) => ({
   type: SAVE_URL,
@@ -32,3 +33,8 @@ export function addUser(name, email) {
     dispatch(setUser(name, email));
   };
 }
+
+export const setTime = (seconds) => ({
+  type: SET_TIME,
+  seconds,
+});
