@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setTime } from '../redux/actions';
 
-export class Timer extends Component {
+class Timer extends Component {
   componentDidMount() {
     const SECOND = 1000;
     Timer.timerID = setInterval(
