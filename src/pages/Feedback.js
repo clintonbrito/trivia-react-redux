@@ -1,6 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import PropTypes from 'prop-types';
 
 INICIAL_STATE = {
   feedbackMsg: '',
@@ -23,11 +23,11 @@ class Feedback extends React.Component {
   }
 }
 
-Feedback.propTypes = {
-  //player: PropTypes.shape({
+// Feedback.propTypes = {
+  // player: PropTypes.shape({
   //  assertions: PropTypes.number,
   //  score: PropTypes.number,
-  //}).isRequired,
-};
+  // }).isRequired,
+//};
 
 export default Feedback;
