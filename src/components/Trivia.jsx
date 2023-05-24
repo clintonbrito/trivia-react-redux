@@ -104,6 +104,19 @@ class Trivia extends Component {
     );
   };
 
+  handleNext = () => {
+    const { questionsId, questions } = this.state;
+    if (questionsId < questions.length - 1) {
+      this.setState((prevState) => ({
+        questionsId: prevState.questionsId + 1,
+        wasAnswerSelected: false,
+      }));
+    } else {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
+  };
+
   render() {
     const { questions, questionsId, wasAnswerSelected } = this.state;
     let countWrongAnswers = 0;
@@ -143,6 +156,16 @@ class Trivia extends Component {
             </div>
           </div>
         )}
+        <div>
+          {wasAnswerSelected && (
+            <button
+              data-testid="btn-next"
+              onClick={ this.handleNext }
+            >
+              Next
+            </button>
+          )}
+        </div>
       </div>
     );
   }
