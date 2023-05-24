@@ -1,6 +1,6 @@
 import React from "react";
 import renderWithRouterAndRedux from "./helpers/renderWithRouterAndRedux";
-import { screen } from "@testing-library/react";
+import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
 import { act } from "react-dom/test-utils";
@@ -34,7 +34,8 @@ describe("Testa a página de login", () => {
         userEvent.type(inputName, NOME);
         expect(buttonPlay).not.toBeDisabled();
     });
-    it("Testa se o botão, quando os inputs são preenchidos corretamente, direciona para a rota '/game' ", () => {
+
+    it("Testa se o botão, quando os inputs são preenchidos corretamente, direciona para a rota '/game' ", async () => {
         const { history } = renderWithRouterAndRedux(<App />);
 
         // window.localStorage
@@ -50,11 +51,14 @@ describe("Testa a página de login", () => {
         const inputEmail = screen.queryByTestId("input-gravatar-email");
         const inputName = screen.queryByTestId("input-player-name");
         const buttonPlay = screen.queryByTestId("btn-play");
-        userEvent.type(inputEmail, EMAIL);
-        userEvent.type(inputName, NOME);
+        act(()=>userEvent.type(inputEmail, EMAIL));
+        act(()=>userEvent.type(inputName, NOME));
 
         act(()=>userEvent.click(buttonPlay));
+
         expect(global.fetch).toBeCalledWith("https://opentdb.com/api_token.php?command=request");
-        // expect(history.location.pathname).toBe('/game');
+
+        //Correção da assincroniciade do teste
+        await waitFor(()=>expect(history.location.pathname).toBe('/game'));
     });
 });
