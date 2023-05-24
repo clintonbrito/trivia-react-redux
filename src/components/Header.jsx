@@ -26,8 +26,9 @@ class Header extends Component {
           <div data-testid="header-player-name">
             <h2>{name}</h2>
           </div>
-          <div data-testid="header-score">
-            <h2>{`Pontuação: ${score}`}</h2>
+          <div>
+            <h2>Pontuação: </h2>
+            <h2 data-testid="header-score">{score}</h2>
           </div>
         </div>
       </header>
@@ -43,10 +44,10 @@ Header.propTypes = ({
 }).isRequired;
 
 const mapStateToProps = (state) => ({
-  name: state.playerReducer.name,
-  score: state.playerReducer.score,
-  gravatarEmail: state.playerReducer.gravatarEmail,
-  imageURL: state.playerReducer.imageURL,
+  name: state.player.name,
+  score: state.player.score,
+  gravatarEmail: state.player.gravatarEmail,
+  imageURL: state.player.imageURL,
   token: state.tokenReducer.token,
 });
 

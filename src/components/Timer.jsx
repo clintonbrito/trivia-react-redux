@@ -38,7 +38,7 @@ Timer.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  currentTime: state.playerReducer.seconds,
+  currentTime: state.player.seconds,
 });
 
 export default connect(mapStateToProps)(Timer);

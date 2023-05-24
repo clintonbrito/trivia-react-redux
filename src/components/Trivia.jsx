@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPoints } from '../redux/actions';
+import { addPoints, setTime } from '../redux/actions';
 import Timer from './Timer';
 // import { withRouter } from 'react-router-dom';
 import './Trivia.css';
@@ -12,6 +12,8 @@ class Trivia extends Component {
     questionsId: 0,
     wasAnswerSelected: false,
     // seconds: 0,
+    // wasShuffled: false,
+    answersArray: [],
   };
 
   componentDidMount() {
@@ -37,8 +39,18 @@ class Trivia extends Component {
   };
 
   makeArrayQuestions = (incorrects, correct) => {
-    const answers = [...incorrects, correct];
-    return this.shuffleArray(answers);
+    const { answersArray } = this.state;
+
+    if (answersArray.length === 0) {
+      const answers = [...incorrects, correct];
+      const answersShuffled = this.shuffleArray(answers);
+
+      this.setState({
+        answersArray: answersShuffled,
+      });
+      return answersShuffled;
+    }
+    return answersArray;
   };
 
   getPointsByDifficult = ({ difficulty }) => {
@@ -80,7 +92,7 @@ class Trivia extends Component {
 
   handleAnswer = ({ target: { textContent } }) => {
     const { questions, questionsId } = this.state;
-    const { dispatch } = this.props;
+    const { dispatch, seconds } = this.props;
     this.setState({
       wasAnswerSelected: true,
     });
@@ -88,7 +100,7 @@ class Trivia extends Component {
     if (textContent === questions[questionsId].correct_answer) {
       const diffPoints = this.getPointsByDifficult(questions[questionsId]);
       const rightAnswerPoints = 10;
-      const timerPoints = 2;
+      const timerPoints = seconds;
       dispatch(addPoints(rightAnswerPoints + (diffPoints * timerPoints)));
     }
   };
@@ -104,6 +116,8 @@ class Trivia extends Component {
 
   handleNext = () => {
     const { questionsId, questions } = this.state;
+    const { dispatch } = this.props;
+
     if (questionsId < questions.length - 1) {
       this.setState((prevState) => ({
         questionsId: prevState.questionsId + 1,
@@ -113,6 +127,11 @@ class Trivia extends Component {
       const { history } = this.props;
       history.push('/feedback');
     }
+    this.setState({
+      answersArray: [],
+    });
+    const THIRTY_SECONDS = 30;
+    dispatch(setTime(THIRTY_SECONDS));
   };
 
   render() {
@@ -178,7 +197,7 @@ Trivia.propTypes = {
 
 const mapStateToProps = (state) => ({
   token: state.tokenReducer.token,
-  seconds: state.playerReducer.seconds,
+  seconds: state.player.seconds,
 });
 
 export default connect(mapStateToProps)(Trivia);

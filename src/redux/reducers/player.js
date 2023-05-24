@@ -9,7 +9,7 @@ const INITIAL_STATE = {
   seconds: 30,
 };
 
-const playerReducer = (state = INITIAL_STATE, action) => {
+const player = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case SAVE_URL:
     return {
@@ -37,4 +37,4 @@ const playerReducer = (state = INITIAL_STATE, action) => {
   }
 };
 
-export default playerReducer;
+export default player;
