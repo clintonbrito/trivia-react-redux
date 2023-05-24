@@ -36,6 +36,7 @@ describe("Testa a página de login", () => {
     });
     it("Testa se o botão, quando os inputs são preenchidos corretamente, direciona para a rota '/game' ", () => {
         const { history } = renderWithRouterAndRedux(<App />);
+
         // window.localStorage
         jest.spyOn(global, "fetch")
         .mockResolvedValue({
@@ -45,11 +46,13 @@ describe("Testa a página de login", () => {
                 "token": "d32c3fce4ed42e27b15713a7a1fdd28c67db7929a75ab161bc268b0d9817888c"
               })
         });
+
         const inputEmail = screen.queryByTestId("input-gravatar-email");
         const inputName = screen.queryByTestId("input-player-name");
         const buttonPlay = screen.queryByTestId("btn-play");
         userEvent.type(inputEmail, EMAIL);
         userEvent.type(inputName, NOME);
+
         act(()=>userEvent.click(buttonPlay));
         expect(global.fetch).toBeCalledWith("https://opentdb.com/api_token.php?command=request");
         // expect(history.location.pathname).toBe('/game');
