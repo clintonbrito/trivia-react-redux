@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-
   feedbackMessage = (assertions) => {
     const number = 3;
     if (assertions < number) {
