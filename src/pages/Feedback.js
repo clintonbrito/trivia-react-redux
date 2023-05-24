@@ -1,30 +1,25 @@
 import React from 'react';
-// import { connect } from 'react-redux';
-// import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import Header from '../components/Header';
 
-INICIAL_STATE = {
-  feedbackMsg: '',
-};
 class Feedback extends React.Component {
   render() {
     return (
       <div>
-          <h2 data-testid="feedback-total-score">
-        Score
+        <Header />
+        <h2 data-testid="feedback-total-score">
+          {this.props.score}
         </h2>
-          <h2 data-testid="feedback-total-question">
-        Question
+        <h2 data-testid="feedback-total-question">
+          Question
         </h2>
       </div>
     );
   }
 }
 
-// Feedback.propTypes = {
-// player: PropTypes.shape({
-//  assertions: PropTypes.number,
-//  score: PropTypes.number,
-// }).isRequired,
-// };
+const mapStateToProps = (state) => ({
+  score: state.score,
+});
 
-export default Feedback;
+export default connect(mapStateToProps)(Feedback);
