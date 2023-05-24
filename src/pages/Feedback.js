@@ -9,10 +9,10 @@ class Feedback extends React.Component {
   render() {
     return (
       <div>
-        <h2 data-testid="feedback-total-score">
+          <h2 data-testid="feedback-total-score">
         Score
         </h2>
-        <h2 data-testid="feedback-total-question">
+          <h2 data-testid="feedback-total-question">
         Question
         </h2>
       </div>
