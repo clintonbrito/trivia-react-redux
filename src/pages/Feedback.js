@@ -4,22 +4,31 @@ import PropTypes from 'prop-types';
 import Header from '../components/Header';
 
 class Feedback extends React.Component {
-  render() {
-    const { score } = this.props;
+  feedbackMessage = (assertions) => {
+    const number = 3;
+    if (assertions < number) {
+      return 'Could be better...';
+    }
 
-    goRanking = () => {
-      const { history } = this.props;
-      history.push('/Ranking');
-    };
+    if (assertions >= number) {
+      return 'Well Done!';
+    }
+  };
+
+  goRanking = () => {
+    const { history } = this.props;
+    history.push('/Ranking');
+  };
+
+  render() {
+    const { score, assertions, history } = this.props;
+
     return (
       <div>
         <Header />
-        <h2 data-testid="feedback-total-score">
-          {score}
-        </h2>
-        <h2 data-testid="feedback-total-question">
-          Question
-        </h2>
+        <h2 data-testid="feedback-total-score">{score}</h2>
+        <h2 data-testid="feedback-total-question">{assertions}</h2>
+        <h2 data-testid="feedback-text">{this.feedbackMessage(assertions)}</h2>
         <button
           type="button"
           id="btn-ranking"
@@ -27,6 +36,13 @@ class Feedback extends React.Component {
           onClick={ this.goRanking }
         >
           ranking
+        </button>
+        <button
+          id="btn-play-again"
+          data-testid="btn-play-again"
+          onClick={ () => history.push('/') }
+        >
+          Play Again
         </button>
       </div>
     );
@@ -40,6 +56,7 @@ Feedback.propTypes = {
 
 const mapStateToProps = (state) => ({
   score: state.playerReducer.score,
+  assertions: state.playerReducer.assertions,
 });
 
 export default connect(mapStateToProps)(Feedback);
