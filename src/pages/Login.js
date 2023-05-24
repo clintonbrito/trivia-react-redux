@@ -25,10 +25,14 @@ class Login extends Component {
     });
   };
 
-  handlePlay = () => {
+  handlePlay = async () => {
     const { history, dispatch } = this.props;
     const { emailInput, nameInput } = this.state;
     dispatch(addUser(nameInput, emailInput));
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const data = await response.json();
+    const { token } = data;
+    localStorage.setItem('token', token);
     history.push('/game');
   };
 

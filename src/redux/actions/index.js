@@ -2,24 +2,23 @@ import md5 from 'crypto-js/md5';
 
 // ACTIONS TYPES
 export const SAVE_URL = 'SAVE_URL';
-export const ADD_TOKEN = 'ADD_TOKEN';
 export const SET_USER = 'SET_USER';
-export const DELETE_TOKEN = 'DELETE_TOKEN';
+export const ADD_POINTS = 'ADD_POINTS';
 
 export const saveURL = (imageURL) => ({
   type: SAVE_URL,
   payload: imageURL,
 });
 
-const addToken = (token) => ({
-  type: ADD_TOKEN,
-  token,
-});
-
 const setUser = (name, email) => ({
   type: SET_USER,
   name,
   gravatarEmail: email,
+});
+
+export const addPoints = (points) => ({
+  type: ADD_POINTS,
+  points,
 });
 
 export const urlGravatar = (email) => async (dispatch) => {
@@ -30,22 +29,6 @@ export const urlGravatar = (email) => async (dispatch) => {
 
 export function addUser(name, email) {
   return async (dispatch) => {
-    const response = await fetch('https://opentdb.com/api_token.php?command=request');
-    const data = await response.json();
-    const { token } = data;
-    dispatch(addToken(token));
-    localStorage.setItem('token', token);
     dispatch(setUser(name, email));
-  };
-}
-
-const deleteToken = () => ({
-  type: DELETE_TOKEN,
-});
-
-export function removeUser() {
-  return (dispatch) => {
-    dispatch(deleteToken());
-    localStorage.setItem('token', '');
   };
 }

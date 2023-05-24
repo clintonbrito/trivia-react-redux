@@ -1,4 +1,4 @@
-import { SAVE_URL, SET_USER } from '../actions';
+import { ADD_POINTS, SAVE_URL, SET_USER } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -21,16 +21,16 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       name: action.name,
       gravatarEmail: action.gravatarEmail,
     };
-    case ADD_SCORE:
-      return {
-        ...state,
-        score: action.payload,
-      };
     case ADD_ASSERTIONS:
       return {
         ...state,
         assertions: action.payload,
       };
+  case ADD_POINTS:
+    return {
+      ...state,
+      score: state.score + action.points,
+    };
   default:
     return state;
   }
