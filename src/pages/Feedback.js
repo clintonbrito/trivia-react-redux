@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
+import PropTypes from 'prop-types';
 
 class Feedback extends React.Component {
   render() {
@@ -38,7 +39,7 @@ Feedback.propTypes = {
 }.isRequired;
 
 const mapStateToProps = (state) => ({
-  score: state.score,
+  score: state.playerReducer.score,
 });
 
 export default connect(mapStateToProps)(Feedback);
