@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
+import { addToRanking, clearAssertion } from '../redux/actions';
 
 class Feedback extends React.Component {
   feedbackMessage = (assertions) => {
@@ -16,12 +17,20 @@ class Feedback extends React.Component {
   };
 
   goRanking = () => {
-    const { history } = this.props;
+    const { history, dispatch } = this.props;
+    dispatch(addToRanking());
+    dispatch(clearAssertion());
     history.push('/Ranking');
   };
 
+  goBack = () => {
+    const { history, dispatch } = this.props;
+    dispatch(clearAssertion());
+    history.push('/');
+  };
+
   render() {
-    const { score, assertions, history } = this.props;
+    const { score, assertions } = this.props;
     return (
       <div>
         <Header />
@@ -34,12 +43,12 @@ class Feedback extends React.Component {
           data-testid="btn-ranking"
           onClick={ this.goRanking }
         >
-          ranking
+          Ranking
         </button>
         <button
           id="btn-play-again"
           data-testid="btn-play-again"
-          onClick={ () => history.push('/') }
+          onClick={ this.goBack }
         >
           Play Again
         </button>

@@ -9,38 +9,9 @@ class Ranking extends Component {
   };
 
   render() {
-    const ranking = [
-      {
-        name: 'joao',
-        score: 488,
-      },
-      {
-        name: 'joao',
-        score: 568,
-      },
-      {
-        name: 'joao',
-        score: 965,
-      },
-      {
-        name: 'joao',
-        score: 753,
-      },
-      {
-        name: 'maria',
-        score: 168,
-      },
-      {
-        name: 'pedro',
-        score: 5965,
-      },
-      {
-        name: 'ana',
-        score: 167,
-      },
-    ];
+    const { ranking } = this.props;
     const sortedRanking = ranking.sort((a, b) => b.score - a.score);
-
+    localStorage.setItem('ranking', JSON.stringify(sortedRanking));
     return (
       <main>
         <button
@@ -85,6 +56,7 @@ const mapStateToProps = (state) => ({
   score: state.player.score,
   gravatarEmail: state.player.gravatarEmail,
   imageURL: state.player.imageURL,
+  ranking: state.player.ranking,
 });
 
 export default connect(mapStateToProps)(Ranking);

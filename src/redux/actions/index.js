@@ -6,6 +6,8 @@ export const SET_USER = 'SET_USER';
 export const ADD_POINTS = 'ADD_POINTS';
 export const SET_TIME = 'SET_TIME';
 export const ADD_ASSERTION = 'ADD_ASSERTION';
+export const ADD_TO_RANKING = 'ADD_TO_RANKING';
+export const CLEAR_ASSERTION = 'CLEAR_ASSERTION';
 
 export const saveURL = (imageURL) => ({
   type: SAVE_URL,
@@ -42,4 +44,12 @@ export function addUser(name, email) {
 export const setTime = (seconds) => ({
   type: SET_TIME,
   seconds,
+});
+
+export const addToRanking = () => ({
+  type: ADD_TO_RANKING,
+});
+
+export const clearAssertion = () => ({
+  type: CLEAR_ASSERTION,
 });

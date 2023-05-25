@@ -1,4 +1,5 @@
-import { ADD_POINTS, SAVE_URL, SET_USER, SET_TIME, ADD_ASSERTION } from '../actions';
+import { ADD_POINTS, SAVE_URL, SET_USER,
+  SET_TIME, ADD_ASSERTION, ADD_TO_RANKING, CLEAR_ASSERTION } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -7,6 +8,7 @@ const INITIAL_STATE = {
   gravatarEmail: '',
   imageURL: '',
   seconds: 30,
+  ranking: [],
 };
 
 const player = (state = INITIAL_STATE, action) => {
@@ -36,6 +38,21 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       assertions: state.assertions + 1,
+    };
+  case ADD_TO_RANKING:
+    return {
+      ...state,
+      ranking: [
+        ...state.ranking,
+        {
+          ...state,
+        },
+      ],
+    };
+  case CLEAR_ASSERTION:
+    return {
+      ...state,
+      assertions: 0,
     };
   default:
     return state;
