@@ -25,6 +25,7 @@ class Feedback extends React.Component {
 
   goBack = () => {
     const { history, dispatch } = this.props;
+    dispatch(addToRanking());
     dispatch(clearAssertion());
     history.push('/');
   };

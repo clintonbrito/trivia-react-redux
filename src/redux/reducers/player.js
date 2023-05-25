@@ -42,6 +42,7 @@ const player = (state = INITIAL_STATE, action) => {
   case ADD_TO_RANKING:
     return {
       ...state,
+      score: 0,
       ranking: [
         ...state.ranking,
         {

@@ -31,7 +31,7 @@ class Ranking extends Component {
               <h4
                 data-testid={ `player-name-${index}` }
               >
-                { `${index + 1}.${result.name}` }
+                { `${result.name}` }
               </h4>
               <h5
                 data-testid={ `player-score-${index}` }
