@@ -1,4 +1,4 @@
-import { ADD_POINTS, SAVE_URL, SET_USER, SET_TIME } from '../actions';
+import { ADD_POINTS, SAVE_URL, SET_USER, SET_TIME, ADD_ASSERTION } from '../actions';
 
 const INITIAL_STATE = {
   name: '',
@@ -31,6 +31,11 @@ const player = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       seconds: action.seconds,
+    };
+  case ADD_ASSERTION:
+    return {
+      ...state,
+      assertions: state.assertions + 1,
     };
   default:
     return state;

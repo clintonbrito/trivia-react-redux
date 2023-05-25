@@ -5,6 +5,7 @@ export const SAVE_URL = 'SAVE_URL';
 export const SET_USER = 'SET_USER';
 export const ADD_POINTS = 'ADD_POINTS';
 export const SET_TIME = 'SET_TIME';
+export const ADD_ASSERTION = 'ADD_ASSERTION';
 
 export const saveURL = (imageURL) => ({
   type: SAVE_URL,
@@ -20,6 +21,10 @@ const setUser = (name, email) => ({
 export const addPoints = (points) => ({
   type: ADD_POINTS,
   points,
+});
+
+export const addAssertion = () => ({
+  type: ADD_ASSERTION,
 });
 
 export const urlGravatar = (email) => async (dispatch) => {

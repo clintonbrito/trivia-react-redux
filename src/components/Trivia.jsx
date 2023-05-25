@@ -1,7 +1,7 @@
 // import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { addPoints, setTime } from '../redux/actions';
+import { addPoints, setTime, addAssertion } from '../redux/actions';
 import Timer from './Timer';
 // import { withRouter } from 'react-router-dom';
 import './Trivia.css';
@@ -101,6 +101,7 @@ class Trivia extends Component {
       const diffPoints = this.getPointsByDifficult(questions[questionsId]);
       const rightAnswerPoints = 10;
       const timerPoints = seconds;
+      dispatch(addAssertion());
       dispatch(addPoints(rightAnswerPoints + (diffPoints * timerPoints)));
     }
   };
