@@ -25,13 +25,21 @@ describe("Testa a página de feedback", () => {
         },
     };
     const FEEDBACK_ROUTE = "/feedback";
+
     it("Testa se a página é renderizada corretamente", () => {
+        renderWithRouterAndRedux(<App />, BAD_ASSERTIONS_STATE, FEEDBACK_ROUTE);
+        const feedbackMessage = screen.queryByTestId("feedback-text");
+        expect(feedbackMessage).toBeInTheDocument();
+        expect(feedbackMessage).toHaveTextContent("Could be better...");
+    });
+    
+    it("TEsta se a mensagem 'Could be better...' é renderizada quando o número de acertos é menor que 3", () => {
         renderWithRouterAndRedux(<App />, STATE, FEEDBACK_ROUTE);
         const feedbackMessage = screen.queryByTestId("feedback-text");
         expect(feedbackMessage).toBeInTheDocument();
         expect(feedbackMessage).toHaveTextContent("Well Done!");
     });
-
+    
     it("Testa se existe um botão de ir para o ranking e se ele redireciona para a página de ranking", () => {
         renderWithRouterAndRedux(<App />, STATE, FEEDBACK_ROUTE);
         const button = screen.queryByTestId("btn-ranking");
@@ -47,14 +55,6 @@ describe("Testa a página de feedback", () => {
         expect(button).toBeInTheDocument();
 
         act(()=>userEvent.click(button));
-    }
-    );
-
-    it("TEsta se a mensagem 'Could be better...' é renderizada quando o número de acertos é menor que 3", () => {
-        renderWithRouterAndRedux(<App />, BAD_ASSERTIONS_STATE, FEEDBACK_ROUTE);
-        const feedbackMessage = screen.queryByTestId("feedback-text");
-        expect(feedbackMessage).toBeInTheDocument();
-        expect(feedbackMessage).toHaveTextContent("Could be better...");
     }
     );
 });
