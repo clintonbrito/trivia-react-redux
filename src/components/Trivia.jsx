@@ -29,7 +29,6 @@ class Trivia extends Component {
     const token = localStorage.getItem('token');
     try {
       const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
-      // const URL_API_TRIVIA = 'https://opentdb.com/api.php?amount=5&token=null';
       const response = await fetch(URL_API_TRIVIA);
       const resultAPI = await response.json();
       this.verifyTriviaAPI(resultAPI);
@@ -96,7 +95,6 @@ class Trivia extends Component {
     this.setState({
       wasAnswerSelected: true,
     });
-    console.log(questions[questionsId]);
     if (textContent === questions[questionsId].correct_answer) {
       const diffPoints = this.getPointsByDifficult(questions[questionsId]);
       const rightAnswerPoints = 10;

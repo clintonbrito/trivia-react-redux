@@ -9,6 +9,16 @@ describe("Testa a página de feedback", () => {
         player: {
             name: "Joaquim",
             assertions: 4,
+            score: 300,
+            gravatarEmail: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
+            ranking: [],
+        },
+    };
+
+    const EQUAL_ASSERTIONS_STATE = {
+        player: {
+            name: "Joaquim",
+            assertions: 3,
             score: 100,
             gravatarEmail: "https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50",
             ranking: [],
@@ -26,16 +36,28 @@ describe("Testa a página de feedback", () => {
     };
     const FEEDBACK_ROUTE = "/feedback";
 
-    it("Testa se a página é renderizada corretamente", () => {
+    it("Testa se a mensagem 'Could be better...' é renderizada quando o número de acertos é menor que 3", () => {
         renderWithRouterAndRedux(<App />, BAD_ASSERTIONS_STATE, FEEDBACK_ROUTE);
         const feedbackMessage = screen.queryByTestId("feedback-text");
         expect(feedbackMessage).toBeInTheDocument();
         expect(feedbackMessage).toHaveTextContent("Could be better...");
     });
     
-    it("TEsta se a mensagem 'Could be better...' é renderizada quando o número de acertos é menor que 3", () => {
+    it("Testa se a mensagem 'Well Done!' é renderizada quando o número de acertos é superior a 3", () => {
         renderWithRouterAndRedux(<App />, STATE, FEEDBACK_ROUTE);
         const feedbackMessage = screen.queryByTestId("feedback-text");
+        expect(feedbackMessage).toBeInTheDocument();
+        expect(feedbackMessage).toHaveTextContent("Well Done!");
+    });
+
+    it("Testa se a mensagem 'Well Done!' é renderizada quando o número de acertos é igual a 3", () => {
+        renderWithRouterAndRedux(<App />, EQUAL_ASSERTIONS_STATE, FEEDBACK_ROUTE);
+        const feedbackMessage = screen.queryByTestId("feedback-text");
+        const totalScore = screen.queryByTestId("feedback-total-score");
+        const totalQuestions = screen.queryByTestId("feedback-total-question");
+
+        expect(totalScore).toBeInTheDocument();
+        expect(totalScore).toHaveTextContent("100");
         expect(feedbackMessage).toBeInTheDocument();
         expect(feedbackMessage).toHaveTextContent("Well Done!");
     });

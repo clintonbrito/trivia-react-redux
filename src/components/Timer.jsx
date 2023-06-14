@@ -42,37 +42,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Timer);
-
-// import React, { useState, useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-
-// function Timer() {
-//   const TIME_LIMIT = 30;
-//   const SECOND = 1000;
-//   const [seconds, setSeconds] = useState(TIME_LIMIT);
-
-//   useEffect(() => {
-//     if (seconds > 0) {
-//       const timer = setInterval(() => {
-//         setSeconds((prevSeconds) => prevSeconds - 1);
-//       }, SECOND);
-//       return () => clearInterval(timer);
-//     }
-//   }, [seconds]);
-
-//   return (
-//     <div>
-//       { useDispatch({
-//         type: 'SET_TIMER',
-//         seconds,
-//       }) }
-//       <h1>
-//         Timer:
-//         {seconds}
-//         s
-//       </h1>
-//     </div>
-//   );
-// }
-
-// export default Timer;
