@@ -182,12 +182,6 @@ describe('Testa o Timer', () => {
         jest.clearAllTimers();
     });
     jest.spyOn(console, 'log').mockImplementation();
-    jest.mock('../components/Timer', () => {
-        return jest.fn().mockImplementation(() => {
-            return { getTimer: () => 30 };
-        });
-    });
-
     it('deve chamar o método getTimer corretamente', () => {
         const { store } = renderWithRouterAndRedux(<App />, STATE, GAME_ROUTE);
 
