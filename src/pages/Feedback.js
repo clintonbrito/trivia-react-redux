@@ -10,10 +10,7 @@ class Feedback extends React.Component {
     if (assertions < number) {
       return 'Could be better...';
     }
-
-    if (assertions >= number) {
-      return 'Well Done!';
-    }
+    return 'Well Done!';
   };
 
   goRanking = () => {

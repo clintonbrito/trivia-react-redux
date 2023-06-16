@@ -4,6 +4,8 @@ import { screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import App from "../App";
 import { act } from "react-dom/test-utils";
+import Feedback from "../pages/Feedback";
+
 describe("Testa a página de feedback", () => {
     const STATE = {
         player: {
@@ -79,4 +81,15 @@ describe("Testa a página de feedback", () => {
         act(()=>userEvent.click(button));
     }
     );
+    it("Testa se o feedback mostra a pontuação total", () => {
+        renderWithRouterAndRedux(<App />,STATE, FEEDBACK_ROUTE);
+        const totalScore = screen.queryByTestId("feedback-total-score");
+        expect(totalScore).toBeInTheDocument();
+        expect(totalScore).toHaveTextContent("300");
+
+        const feedbackTotalQuestion = screen.queryByTestId("feedback-total-question");
+        expect(feedbackTotalQuestion).toBeInTheDocument();
+        expect(feedbackTotalQuestion).toHaveTextContent("4");
+        
+      });
 });

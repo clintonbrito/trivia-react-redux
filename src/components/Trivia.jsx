@@ -27,14 +27,11 @@ class Trivia extends Component {
   getQuestions = async () => {
     // const { token } = this.props;
     const token = localStorage.getItem('token');
-    try {
-      const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
-      const response = await fetch(URL_API_TRIVIA);
-      const resultAPI = await response.json();
-      this.verifyTriviaAPI(resultAPI);
-    } catch (e) {
-      console.log(e.message);
-    }
+
+    const URL_API_TRIVIA = `https://opentdb.com/api.php?amount=5&token=${token}`;
+    const response = await fetch(URL_API_TRIVIA);
+    const resultAPI = await response.json();
+    this.verifyTriviaAPI(resultAPI);
   };
 
   makeArrayQuestions = (incorrects, correct) => {
@@ -62,7 +59,6 @@ class Trivia extends Component {
     case 'hard':
       return hardPoint;
     default:
-      return 0;
     }
   };
 
@@ -119,8 +115,7 @@ class Trivia extends Component {
 
     if (questionsId < questions.length - 1) {
       this.setState((prevState) => ({
-        questionsId: prevState.questionsId + 1,
-        wasAnswerSelected: false,
+        questionsId: prevState.questionsId + 1, wasAnswerSelected: false,
       }));
     } else {
       const { history } = this.props;
@@ -139,42 +134,43 @@ class Trivia extends Component {
     let countWrongAnswers = 0;
     return (
       <div>
-        <Timer getTimer={ () => this.getTimer } />
-        {questions.length > 0 && (
-          <div>
-            <h2 data-testid="question-category">
-              {questions[questionsId].category}
-            </h2>
-            <h3 data-testid="question-text">{questions[questionsId].question}</h3>
-            <div data-testid="answer-options">
-              {this.makeArrayQuestions(
-                questions[questionsId].incorrect_answers,
-                questions[questionsId].correct_answer,
-              ).map((answer) => {
-                if (answer !== questions[questionsId].correct_answer) {
-                  countWrongAnswers += 1;
-                }
-                return (
-                  <button
-                    key={ answer }
-                    onClick={ this.handleAnswer }
-                    disabled={ seconds === 0 }
-                    className={ wasAnswerSelected
+        <Timer />
+        {questions.length > 0
+         && (
+           <div>
+             <h2 data-testid="question-category">
+               {questions[questionsId].category}
+             </h2>
+             <h3 data-testid="question-text">{questions[questionsId].question}</h3>
+             <div data-testid="answer-options">
+               {this.makeArrayQuestions(
+                 questions[questionsId].incorrect_answers,
+                 questions[questionsId].correct_answer,
+               ).map((answer) => {
+                 if (answer !== questions[questionsId].correct_answer) {
+                   countWrongAnswers += 1;
+                 }
+                 return (
+                   <button
+                     key={ answer }
+                     onClick={ this.handleAnswer }
+                     disabled={ seconds === 0 }
+                     className={ wasAnswerSelected
 
-                      ? this.verifyAnswerColor(answer) : 'answer' }
-                    data-testid={
-                      answer === questions[questionsId].correct_answer
-                        ? 'correct-answer'
-                        : `wrong-answer-${countWrongAnswers - 1}`
-                    }
-                  >
-                    {answer}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        )}
+                       ? this.verifyAnswerColor(answer) : 'answer' }
+                     data-testid={
+                       answer === questions[questionsId].correct_answer
+                         ? 'correct-answer'
+                         : `wrong-answer-${countWrongAnswers - 1}`
+                     }
+                   >
+                     {answer}
+                   </button>
+                 );
+               })}
+             </div>
+           </div>
+         )}
         <div>
           {wasAnswerSelected && (
             <button
